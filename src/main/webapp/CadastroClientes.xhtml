@@ -15,7 +15,32 @@
 			<f:viewAction action="#{gestaoClientesBean.todosClientes}" />
 		</f:metadata>
 
-		<h:form action="">
+		<h:form>
+			<p:toolbar>
+				<f:facet name="left">
+					<p:inputText placeholder="Digite aqui um termo para pesquisa..."
+						size="30"/>
+					
+					<p:commandButton value="Pesquisar" icon="fa fa fa-search"/>
+					
+					<span class="ui-separator">
+						<SPAN class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>				
+					
+					<p:commandButton value="Nova" icon="fa fa-plus" />
+					
+					<span class="ui-separator">
+						<SPAN class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>
+					
+					<p:commandButton title="Editar" icon="fa fa-edit"/>
+					
+					<p:commandButton title="Editar" icon="fa fa-trash"/>				
+				</f:facet>
+			</p:toolbar>
+			
+			<p:spacer height="20px"/>
+			
 			<p:dataTable value="#{gestaoClientesBean.listaClientes}"
 				var="cliente" emptyMessage="Nenhuma informação a ser exibida"
 				paginator="true" rows="10" paginatorPosition="bottom">
