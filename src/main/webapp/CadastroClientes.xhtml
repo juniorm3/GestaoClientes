@@ -15,8 +15,8 @@
 			<f:viewAction action="#{gestaoClientesBean.todosClientes}" />
 		</f:metadata>
 
-		<h:form>
-			<p:messages autoUpdate="true" />
+		<h:form id="frm">
+			<p:messages id="messages" />
 			<p:toolbar>
 				<f:facet name="left">
 					<p:inputText id="termoPesquisa" placeholder="Digite aqui um termo para pesquisa..."
@@ -24,7 +24,7 @@
 					
 					<p:commandButton value="Pesquisar" icon="fa fa-search"
 						actionListener="#{gestaoClientesBean.pesquisar}" 
-						update="clienteDataTable" process="@this termoPesquisa"/>
+						update="clienteDataTable messages" process="@this termoPesquisa"/>
 					
 					<span class="ui-separator">
 						<SPAN class="ui-icon ui-icon-grip-dotted-vertical" />
@@ -69,10 +69,12 @@
 			
 			<p:dialog id="clienteDialog" header="Novo cliente" widgetVar="clienteDialog"
 				modal="true" resizable="false" closeOnEscape="true">
+				<p:messages id="clienteMessages" />
+				
 				<p:panelGrid id="clientePanelGrid" columns="2" 
 					rendered="#{gestaoClientesBean.cliente ne null}">
 					<p:outputLabel value="Nome Cliente" for="nome"/>
-					<p:inputText id="nome" size="80" maxlength="120"
+					<p:inputText id="nome" size="80" maxlength="80"
 						value="#{gestaoClientesBean.cliente.nome}"/>
 					
 					<p:outputLabel value="E-mail Cliente" for="email"/>
@@ -84,20 +86,20 @@
 						<f:selectItem itemLabel="Selecione..."/>
 						<f:selectItems value="#{gestaoClientesBean.tiposCliente}" 
 							var="tipo"	itemLabel="#{tipo.descricao}"
-							itemValue="#{tipo.descricao}"/>
+							itemValue="#{tipo}"/>
 					</p:selectOneMenu>
 					
 					<p:outputLabel value="CPF/CNPJ" for="cpfCnpj"/>
 					<p:inputMask id="cpfCnpj" mask="99.999.999/999-99" size="18"  maxlength="18"
-					 value="#{gestaoClientesBean.cliente.documentoReceitaFederal}"/>
+					 value="#{gestaoClientesBean.cliente.documentoReceitaFederal}" />
 					 
 					 <p:outputLabel value="Ativo" for="ativo"/>
 					 <p:selectBooleanCheckbox id="ativo" label="Ativo" value="#{gestaoClientesBean.cliente.ativo}"/>
 					 
 					 <h:outputLabel />
 					 <p:commandButton value="Salvar" actionListener="#{gestaoClientesBean.salvar}"
-					 	update="clienteDataTable clientePanelGrid"
-					 	oncomplete="PF('clienteDialog').hide()" process="clienteDialog"/>
+					 	update="clientePanelGrid clienteMessages"
+					 	oncomplete="if (!args.validationFailed) PF('clienteDialog').hide()" process="clienteDialog"/>
 				</p:panelGrid>
 			</p:dialog>
 		</h:form>

@@ -1,11 +1,14 @@
 package com.jrm3.controller;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.primefaces.context.RequestContext;
 
 import com.jrm3.model.Cliente;
 import com.jrm3.model.TipoPessoa;
@@ -43,9 +46,14 @@ public class GestaoClientesBean implements Serializable {
 		
 		if(jaHouvePesquisa()) {
 			pesquisar();
+		} else {
+			todosClientes();
 		}
 		
-		messages.info("Cliente cadastrado com sucesso!");
+		messages.info("Cliente salvo com sucesso!");
+		
+		RequestContext.getCurrentInstance().update(Arrays.
+				asList("frm:clienteDataTable","frm:messages"));
 	}
 
 	public void pesquisar() {

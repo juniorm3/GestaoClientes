@@ -32,6 +32,7 @@ public class Cliente implements Serializable {
 	@Column(name = "email_cliente", nullable = false, length = 80)
 	private String email;
 
+	@NotEmpty
 	@Column(name = "doc_receita_federal", nullable = false, length = 18)
 	private String documentoReceitaFederal;
 
