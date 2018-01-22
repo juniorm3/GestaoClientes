@@ -30,7 +30,7 @@ public class GestaoClientesBean implements Serializable {
 
 	@Inject
 	private CadastroClienteService cadastroClienteService;
-		
+
 	private List<Cliente> listaClientes;
 
 	private String termoPesquisa;
@@ -43,17 +43,23 @@ public class GestaoClientesBean implements Serializable {
 
 	public void salvar() {
 		cadastroClienteService.salvar(cliente);
-		
-		if(jaHouvePesquisa()) {
-			pesquisar();
-		} else {
-			todosClientes();
-		}
-		
+
+		atualizarRegitros();
+
 		messages.info("Cliente salvo com sucesso!");
+
+		RequestContext.getCurrentInstance().update(Arrays.asList("frm:clienteDataTable", "frm:messages"));
+	}
+
+
+	public void excluir() {
+		cadastroClienteService.excluir(cliente);
 		
-		RequestContext.getCurrentInstance().update(Arrays.
-				asList("frm:clienteDataTable","frm:messages"));
+		cliente = null;
+		
+		atualizarRegitros();
+		
+		messages.info("Cliente excluido com sucesso!");
 	}
 
 	public void pesquisar() {
@@ -67,10 +73,20 @@ public class GestaoClientesBean implements Serializable {
 	public void todosClientes() {
 		listaClientes = clientes.todas();
 	}
+
+	private void atualizarRegitros() {
+		if (jaHouvePesquisa()) {
+			pesquisar();
+		} else {
+			todosClientes();
+		}
+		
+	}
 	
 	private boolean jaHouvePesquisa() {
 		return termoPesquisa != null && !"".equals(termoPesquisa);
 	}
+		
 
 	public List<Cliente> getListaClientes() {
 		return listaClientes;
@@ -91,13 +107,13 @@ public class GestaoClientesBean implements Serializable {
 	public Cliente getCliente() {
 		return cliente;
 	}
-	
+
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	
+
 	public boolean isClienteSeleciondo() {
-		return cliente != null && cliente.getId() != null;	
+		return cliente != null && cliente.getId() != null;
 	}
 
 }
