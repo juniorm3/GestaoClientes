@@ -35,6 +35,7 @@
 		<listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
 	</listener>
 	
+	<display-name>GestaoClientes</display-name>
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
