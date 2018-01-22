@@ -19,18 +19,21 @@
 			<p:messages autoUpdate="true" />
 			<p:toolbar>
 				<f:facet name="left">
-					<p:inputText placeholder="Digite aqui um termo para pesquisa..."
+					<p:inputText id="termoPesquisa" placeholder="Digite aqui um termo para pesquisa..."
 						size="30" value="#{gestaoClientesBean.termoPesquisa}"/>
 					
 					<p:commandButton value="Pesquisar" icon="fa fa-search"
-						actionListener="#{gestaoClientesBean.pesquisar}" update="clienteDataTable"/>
+						actionListener="#{gestaoClientesBean.pesquisar}" 
+						update="clienteDataTable" process="@this termoPesquisa"/>
 					
 					<span class="ui-separator">
 						<SPAN class="ui-icon ui-icon-grip-dotted-vertical" />
 					</span>				
 					
-					<p:commandButton value="Nova" icon="fa fa-plus" 
-						onclick="PF('clienteDialog').show()"/>
+					<p:commandButton value="Nova" icon="fa fa-plus"
+						actionListener="#{gestaoClientesBean.prepararNovoCliente}" 
+						oncomplete="PF('clienteDialog').show()" update="clienteDialog"
+						process="@this"/>
 					
 					<span class="ui-separator">
 						<SPAN class="ui-icon ui-icon-grip-dotted-vertical" />
@@ -64,9 +67,10 @@
 				</p:column>
 			</p:dataTable>
 			
-			<p:dialog header="Novo cliente" widgetVar="clienteDialog"
+			<p:dialog id="clienteDialog" header="Novo cliente" widgetVar="clienteDialog"
 				modal="true" resizable="false" closeOnEscape="true">
-				<p:panelGrid id="clienteGrid" columns="2">
+				<p:panelGrid id="clientePanelGrid" columns="2" 
+					rendered="#{gestaoClientesBean.cliente ne null}">
 					<p:outputLabel value="Nome Cliente" for="nome"/>
 					<p:inputText id="nome" size="80" maxlength="120"
 						value="#{gestaoClientesBean.cliente.nome}"/>
@@ -80,19 +84,20 @@
 						<f:selectItem itemLabel="Selecione..."/>
 						<f:selectItems value="#{gestaoClientesBean.tiposCliente}" 
 							var="tipo"	itemLabel="#{tipo.descricao}"
-							itemValue="#{tipo}"/>
+							itemValue="#{tipo.descricao}"/>
 					</p:selectOneMenu>
 					
 					<p:outputLabel value="CPF/CNPJ" for="cpfCnpj"/>
 					<p:inputMask id="cpfCnpj" mask="99.999.999/999-99" size="18"  maxlength="18"
 					 value="#{gestaoClientesBean.cliente.documentoReceitaFederal}"/>
 					 
-					 <h:outputLabel />
-					 <p:selectBooleanCheckbox id="ativo" label="Ativo" title="TESTE"/>
+					 <p:outputLabel value="Ativo" for="ativo"/>
+					 <p:selectBooleanCheckbox id="ativo" label="Ativo" value="#{gestaoClientesBean.cliente.ativo}"/>
 					 
 					 <h:outputLabel />
 					 <p:commandButton value="Salvar" actionListener="#{gestaoClientesBean.salvar}"
-					 	update="clienteDataTable clienteGrid"/>
+					 	update="clienteDataTable clientePanelGrid"
+					 	oncomplete="PF('clienteDialog').hide()" process="clienteDialog"/>
 				</p:panelGrid>
 			</p:dialog>
 		</h:form>
