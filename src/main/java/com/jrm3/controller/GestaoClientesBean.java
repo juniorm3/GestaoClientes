@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.jrm3.model.Cliente;
+import com.jrm3.model.TipoPessoa;
 import com.jrm3.repository.Clientes;
 import com.jrm3.util.FacesMassages;
 
@@ -26,6 +27,9 @@ public class GestaoClientesBean implements Serializable {
 	private List<Cliente> listaClientes;
 	
 	private String termoPesquisa;
+	
+	@Inject
+	private Cliente cliente;
 	
 	public void pesquisar() {
 		listaClientes = clientes.pesquisar(termoPesquisa);
@@ -51,5 +55,12 @@ public class GestaoClientesBean implements Serializable {
 		this.termoPesquisa = termoPesquisa;
 	}
 	
+	public TipoPessoa[] getTiposCliente() {
+		return TipoPessoa.values();
+	}
 	
+	public Cliente getCliente() {
+		return cliente;
+	}
+ 	
 }

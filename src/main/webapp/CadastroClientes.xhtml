@@ -16,7 +16,7 @@
 		</f:metadata>
 
 		<h:form>
-			<p:messages autoUpdate="true"/>
+			<p:messages autoUpdate="true" />
 			<p:toolbar>
 				<f:facet name="left">
 					<p:inputText placeholder="Digite aqui um termo para pesquisa..."
@@ -66,7 +66,34 @@
 			
 			<p:dialog header="Novo cliente" widgetVar="clienteDialog"
 				modal="true" resizable="false" closeOnEscape="true">
-				<p:commandButton value="TESTE"/>
+				<p:panelGrid id="clienteGrid" columns="2">
+					<p:outputLabel value="Nome Cliente" for="nome"/>
+					<p:inputText id="nome" size="80" maxlength="120"
+						value="#{gestaoClientesBean.cliente.nome}"/>
+					
+					<p:outputLabel value="E-mail Cliente" for="email"/>
+					<p:inputText id="email" size="80" maxlength="80"
+						value="#{gestaoClientesBean.cliente.email}"/>
+					
+					<p:outputLabel value="Tipo Cliente" for="tipo"/>
+					<p:selectOneMenu id="tipo" value="#{gestaoClientesBean.cliente.tipo}">
+						<f:selectItem itemLabel="Selecione..."/>
+						<f:selectItems value="#{gestaoClientesBean.tiposCliente}" 
+							var="tipo"	itemLabel="#{tipo.descricao}"
+							itemValue="#{tipo}"/>
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="CPF/CNPJ" for="cpfCnpj"/>
+					<p:inputMask id="cpfCnpj" mask="99.999.999/999-99" size="18"  maxlength="18"
+					 value="#{gestaoClientesBean.cliente.documentoReceitaFederal}"/>
+					 
+					 <h:outputLabel />
+					 <p:selectBooleanCheckbox id="ativo" label="Ativo" title="TESTE"/>
+					 
+					 <h:outputLabel />
+					 <p:commandButton value="Salvar" actionListener="#{gestaoClientesBean.salvar}"
+					 	update="clienteDataTable clienteGrid"/>
+				</p:panelGrid>
 			</p:dialog>
 		</h:form>
 	</ui:define>
