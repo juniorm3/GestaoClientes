@@ -17,6 +17,7 @@
 
 		<h:form id="frm">
 			<p:messages id="messages" />
+			
 			<p:toolbar id="toolbar">
 				<f:facet name="left">
 					<p:inputText id="termoPesquisa" placeholder="Digite aqui um termo para pesquisa..."
@@ -52,7 +53,10 @@
 						disabled="#{not gestaoClientesBean.clienteSeleciondo}"
 						actionListener="#{gestaoClientesBean.excluir}"
 						update="messages clienteDataTable toolbar"
-						process="@this"/>
+						process="@this">
+						<p:confirm icon="ui-icon-alert" header="Confirmação de Exclusão"
+							message="Tem certeza que deseja excluir o registro?"/>
+					</p:commandButton>
 				</f:facet>
 			</p:toolbar>
 			
