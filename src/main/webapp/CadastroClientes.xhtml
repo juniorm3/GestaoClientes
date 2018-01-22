@@ -33,7 +33,9 @@
 					<p:commandButton value="Nova" icon="fa fa-plus"
 						actionListener="#{gestaoClientesBean.prepararNovoCliente}" 
 						oncomplete="PF('clienteDialog').show()" update="clienteDialog"
-						process="@this"/>
+						process="@this">
+						<p:resetInput target="clienteDialog" />
+					</p:commandButton>
 					
 					<span class="ui-separator">
 						<SPAN class="ui-icon ui-icon-grip-dotted-vertical" />
@@ -71,6 +73,8 @@
 				modal="true" resizable="false" closeOnEscape="true">
 				<p:messages id="clienteMessages" />
 				
+				<p:defaultCommand target="salvarComandBotao"  scope="clienteDialog"/>
+				
 				<p:panelGrid id="clientePanelGrid" columns="2" 
 					rendered="#{gestaoClientesBean.cliente ne null}">
 					<p:outputLabel value="Nome Cliente" for="nome"/>
@@ -97,7 +101,7 @@
 					 <p:selectBooleanCheckbox id="ativo" label="Ativo" value="#{gestaoClientesBean.cliente.ativo}"/>
 					 
 					 <h:outputLabel />
-					 <p:commandButton value="Salvar" actionListener="#{gestaoClientesBean.salvar}"
+					 <p:commandButton id="salvarComandBotao" value="Salvar" actionListener="#{gestaoClientesBean.salvar}"
 					 	update="clientePanelGrid clienteMessages"
 					 	oncomplete="if (!args.validationFailed) PF('clienteDialog').hide()" process="clienteDialog"/>
 				</p:panelGrid>
