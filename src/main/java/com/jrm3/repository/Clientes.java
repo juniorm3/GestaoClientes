@@ -33,7 +33,7 @@ public class Clientes implements Serializable {
 
 		TypedQuery<Cliente> query = manager.createQuery(jpql, Cliente.class);
 
-		query.setParameter("nome", Cliente.class);
+		query.setParameter("nome", nome + "%");
 
 		return query.getResultList();
 	}
