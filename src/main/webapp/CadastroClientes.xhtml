@@ -23,26 +23,27 @@
 	<h2>Cadastro de Clientes</h2>
 	
 	<div id="conteudo">
-		
-		<p:dataTable value="#{gestaoClientesBean.listaClientes}"
-			var="cliente" emptyMessage="Nenhuma informação a ser exibida"
-				paginator="true" rows="10" paginatorPosition="bottom"> 
-			<p:column headerText="Nome cliente">
-				<h:outputText value="#{cliente.nome}"/>
-			</p:column>
-			
-			<p:column headerText="E-Mail cliente">
-				<h:outputText value="#{cliente.email}"/>
-			</p:column>
-			
-			<p:column headerText="CPF/CNPJ">
-				<h:outputText value="#{cliente.documentoReceitaFederal}"/>
-			</p:column>
-			
-			<p:column headerText="Tipo cliente">
-				<h:outputText value="#{cliente.tipo}"/>
-			</p:column>
-		</p:dataTable>
+		<h:form action="">
+			<p:dataTable value="#{gestaoClientesBean.listaClientes}"
+				var="cliente" emptyMessage="Nenhuma informação a ser exibida"
+					paginator="true" rows="10" paginatorPosition="bottom"> 
+				<p:column headerText="Nome cliente" sortBy="#{cliente.nome}">
+					<h:outputText value="#{cliente.nome}"/>
+				</p:column>
+				
+				<p:column headerText="E-Mail cliente">
+					<h:outputText value="#{cliente.email}"/>
+				</p:column>
+				
+				<p:column headerText="CPF/CNPJ">
+					<h:outputText value="#{cliente.documentoReceitaFederal}"/>
+				</p:column>
+				
+				<p:column headerText="Tipo cliente" sortBy="#{cliente.tipo}">
+					<h:outputText value="#{cliente.tipo}"/>
+				</p:column>
+			</p:dataTable> 		
+		</h:form>
 		
 	</div>
 
