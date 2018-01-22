@@ -40,7 +40,7 @@ public class GestaoClientesBean implements Serializable {
 	public void prepararNovoCliente() {
 		cliente = new Cliente();
 	}
-	
+
 	public void salvar() {
 		cadastroClienteService.salvar(cliente);
 		

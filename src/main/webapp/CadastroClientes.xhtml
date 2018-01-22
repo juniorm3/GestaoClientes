@@ -42,7 +42,11 @@
 					</span>
 					
 					<p:commandButton title="Editar" icon="fa fa-edit" 
-						disabled="#{not gestaoClientesBean.clienteSeleciondo}"/>
+						disabled="#{not gestaoClientesBean.clienteSeleciondo}"
+						oncomplete="PF('clienteDialog').show()" update="clienteDialog"
+						process="@this">
+						<p:resetInput target="clienteDialog" />
+					</p:commandButton>
 					
 					<p:commandButton title="Excluir" icon="fa fa-trash"
 						disabled="#{not gestaoClientesBean.clienteSeleciondo}"/>
