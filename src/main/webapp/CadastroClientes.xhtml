@@ -17,7 +17,7 @@
 
 		<h:form id="frm">
 			<p:messages id="messages" />
-			<p:toolbar>
+			<p:toolbar id="toolbar">
 				<f:facet name="left">
 					<p:inputText id="termoPesquisa" placeholder="Digite aqui um termo para pesquisa..."
 						size="30" value="#{gestaoClientesBean.termoPesquisa}"/>
@@ -41,9 +41,11 @@
 						<SPAN class="ui-icon ui-icon-grip-dotted-vertical" />
 					</span>
 					
-					<p:commandButton title="Editar" icon="fa fa-edit"/>
+					<p:commandButton title="Editar" icon="fa fa-edit" 
+						disabled="#{not gestaoClientesBean.clienteSeleciondo}"/>
 					
-					<p:commandButton title="Editar" icon="fa fa-trash"/>				
+					<p:commandButton title="Excluir" icon="fa fa-trash"
+						disabled="#{not gestaoClientesBean.clienteSeleciondo}"/>
 				</f:facet>
 			</p:toolbar>
 			
@@ -51,7 +53,13 @@
 			
 			<p:dataTable id="clienteDataTable" value="#{gestaoClientesBean.listaClientes}"
 				var="cliente" emptyMessage="Nenhuma informação a ser exibida"
-				paginator="true" rows="10" paginatorPosition="bottom">
+				paginator="true" rows="10" paginatorPosition="bottom"
+				selectionMode="single" selection="#{gestaoClientesBean.cliente}" rowKey="#{cliente.id}">
+				
+				<p:ajax event="rowSelect" update="frm:toolbar"/>
+				
+				<p:ajax event="rowUnselect" update="frm:toolbar"/>
+				
 				<p:column headerText="Nome cliente" sortBy="#{cliente.nome}">
 					<h:outputText value="#{cliente.nome}" />
 				</p:column>
