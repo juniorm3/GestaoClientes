@@ -9,6 +9,7 @@ import javax.inject.Named;
 
 import com.jrm3.model.Cliente;
 import com.jrm3.repository.Clientes;
+import com.jrm3.util.FacesMassages;
 
 @Named
 @ViewScoped
@@ -19,7 +20,20 @@ public class GestaoClientesBean implements Serializable {
 	@Inject
 	private Clientes clientes;
 	
+	@Inject
+	private FacesMassages messages;
+	
 	private List<Cliente> listaClientes;
+	
+	private String termoPesquisa;
+	
+	public void pesquisar() {
+		listaClientes = clientes.pesquisar(termoPesquisa);
+		
+		if(listaClientes.isEmpty()) {
+			messages.info("Sua consulta não retornou registros.");
+		}
+	}
 	
 	public void todosClientes() {
 		listaClientes = clientes.todas();
@@ -28,4 +42,14 @@ public class GestaoClientesBean implements Serializable {
 	public List<Cliente> getListaClientes() {
 		return listaClientes;
 	}
+
+	public String getTermoPesquisa() {
+		return termoPesquisa;
+	}
+
+	public void setTermoPesquisa(String termoPesquisa) {
+		this.termoPesquisa = termoPesquisa;
+	}
+	
+	
 }
